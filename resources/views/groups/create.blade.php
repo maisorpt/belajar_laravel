@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tambah Data Post - SantriKoding.com</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body style="background: lightgray">
 
@@ -14,57 +14,57 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <form action="{{ route('student_as.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('groups.store') }}" method="POST" enctype="multipart/form-data">
                         
                             @csrf
 
-                            <div class="form-group">
-                                <label class="font-weight-bold">Photo</label>
-                                <input type="file" class="form-control @error('photo') is-invalid @enderror" name="photo">
-                            
-                                <!-- error message untuk title -->
-                                @error('photo')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
 
-                            <div class="form-group">
-                                <label class="font-weight-bold">Nama</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Masukkan Nama">
-                            
-                                <!-- error message untuk title -->
-                                @error('name')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
+                            <div class="my-3">
+                                <label for="kelas" class="form-label font-weight-bold">Choose Teacher</label>
+                                <select class="form-select form-control @error('teacher_name') is-invalid @enderror" aria-label="Default select example" name="teacher_name" id="teacher">
 
-                            <div class="form-group">
-                                <label class="font-weight-bold">Email</label>
-                                <textarea class="form-control @error('email') is-invalid @enderror" name="email" rows="5" placeholder="Masukkan Email">{{ old('email') }}</textarea>
-                            
-                                <!-- error message untuk content -->
-                                @error('email')
+                                @forelse ($users as $user)
+                                    <option value="{{ $user->id}}">
+                                    {{ $user->name}}
+                                     </option>
+                                     @empty
+                                  <div class="alert alert-danger">
+                                      Data Post belum Tersedia.
+                                  </div>
+
+                                @endforelse
+                                 </select>
+
+                                        <!-- error message untuk title -->
+                                @error('teacher_name')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="font-weight-bold">No HP</label>
-                                <textarea class="form-control @error('phone') is-invalid @enderror" name="phone" rows="5" placeholder="Masukkan phone">{{ old('phone') }}</textarea>
-                            
-                                <!-- error message untuk content -->
-                                @error('phone')
+                             </div>
+
+                             <div class="my-3">
+                                <label for="kelas" class="form-label font-weight-bold">Choose Class</label>
+                                <select class="form-select form-control @error('classroom') is-invalid @enderror" aria-label="Default select example" name="classroom" id="classroom">
+
+                                @forelse ($classrooms as $classroom)
+                                    <option value="{{ $classroom->id}}">
+                                    {{ $classroom->name}}
+                                     </option>
+                                     @empty
+                                  <div class="alert alert-danger">
+                                      Data Post belum Tersedia.
+                                  </div>
+
+                                @endforelse
+                                 </select>
+                                        <!-- error message untuk title -->
+                                @error('classroom')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
+                             </div>
 
                             <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
@@ -77,10 +77,11 @@
     </div>
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <!-- <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 <script>
     CKEDITOR.replace( 'content' );
 </script> -->
+
 </body>
 </html>
