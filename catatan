@@ -1,0 +1,20 @@
+                               @forelse ($groups as $group)
+                                    <option value="{{ $group->id}}" {{ $group->id == $schedule->user_id ? 'selected' : '' }}>
+                                    @forelse ($users as $user)
+                                    {{ $user->id == $group->user_id ? '$user->name' : '' }} -
+                                    @empty
+                                  <div class="alert alert-danger">
+                                      Data Teacher belum Tersedia -
+                                  </div>
+                                    @endforelse
+
+                                    @forelse ($classrooms as $classroom)
+                                    {{ $classroom->id == $group->user_id ? '$classrooms->name' : '' }} 
+                                    @empty
+                                  <div class="alert alert-danger">
+                                      Data Classroom belum Tersedia
+                                  </div>
+                                     @endforelse  
+
+                                @endforelse
+                                 </select>

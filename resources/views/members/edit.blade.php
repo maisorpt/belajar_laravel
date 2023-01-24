@@ -25,7 +25,7 @@
                                 <select class="form-select form-control @error('student_name') is-invalid @enderror" aria-label="Default select example" name="student_name" id="student">
 
                                 @forelse ($student_as as $student_a)
-                                    <option value="{{ $student_a->id}}">
+                                    <option value="{{ $student_a->id}}" {{ $student_a->id == $member->student_id ? 'selected' : '' }}>
                                     {{ $student_a->name}}
                                      </option>
                                      @empty

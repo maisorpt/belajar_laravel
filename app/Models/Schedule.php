@@ -12,7 +12,7 @@ class Schedule extends Model
         'group_id',
         'user_id',
         'note',
-        'time_start_at',
-        'time_end_at'
+        'time_start',
+        'time_end'
     ];
 }
