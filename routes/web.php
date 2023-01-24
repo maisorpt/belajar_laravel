@@ -36,6 +36,7 @@ Route::post('/formulir/proses', [App\Http\Controllers\PelajarController::class, 
 
 //Santri koding #2
 Route::resource('/student_as', \App\Http\Controllers\Student_aController::class);
+Route::resource('/classrooms', \App\Http\Controllers\ClassroomController::class);
 Route::resource('/groups', \App\Http\Controllers\GroupController::class);
 Route::resource('/members', \App\Http\Controllers\MemberController::class);
 Route::resource('/presences', \App\Http\Controllers\PresenceController::class);

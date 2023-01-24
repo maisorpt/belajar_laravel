@@ -12,9 +12,9 @@ class MemberController extends Controller
     {
         //get posts
         $members = DB::table('members')
-                ->join('groups', 'groups.id', '=', 'members.group_id')
+                ->join('classrooms', 'classrooms.id', '=', 'members.classroom_id')
                 ->join('student_as', 'student_as.id', '=', 'members.student_id')
-                ->select('members.id', 'groups.name as class_name', 'student_as.name as student_name')
+                ->select('members.id', 'classrooms.name as class_name', 'student_as.name as student_name')
                 ->paginate(10);
 
         //render view with posts

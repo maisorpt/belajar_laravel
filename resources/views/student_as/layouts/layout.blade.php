@@ -169,9 +169,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ url('/classrooms') }}">
               <i class="fa-solid fa-book"></i>
-              Posts
+              Classrooms
             </a>
           </li>
           <li class="nav-item">
