@@ -24,7 +24,7 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <a href="{{ route('student_as.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
+                        <a href="{{ route('members.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
                         <table class="table table-bordered">
                             <thead>
                               <tr>

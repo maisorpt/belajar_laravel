@@ -25,7 +25,7 @@ class MemberController extends Controller
 
     public function create()
     {
-        $users = Student_a::all();
+        $student_as= Student_a::all();
         $classrooms = Classroom::all();
 
         return view('members.create', compact('student_as', 'classrooms'));
@@ -42,7 +42,7 @@ class MemberController extends Controller
         //create post
         Member::create([
             'student_id' => $request->student_name,
-            'classroom_id' => $request->classroom
+            'classroom_id' => $request->classroom,
 
         ]);
 

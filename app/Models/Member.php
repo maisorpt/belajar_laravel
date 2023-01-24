@@ -9,7 +9,7 @@ class Member extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'group_id',
+        'classroom_id',
         'student_id'
     ];
 }

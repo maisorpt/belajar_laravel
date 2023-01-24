@@ -43,7 +43,7 @@
                               @forelse ($schedules as $schedule)
                                 <tr>
                                     <td>{{ $schedule->id}}</td>
-                                    <td>{{ $schedule->class }}</td>
+                                    <td>{{ $schedule->classroom_name}}</td>
                                     <td>{{ $schedule->teacher}}</td>
                                     <td>{{ $schedule->note}}</td>
                                     <td>{{ $schedule->start}}</td>

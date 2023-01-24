@@ -14,18 +14,18 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <form action="{{ route('groups.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('members.store') }}" method="POST" enctype="multipart/form-data">
                         
                             @csrf
 
 
                             <div class="my-3">
-                                <label for="kelas" class="form-label font-weight-bold">Choose Teacher</label>
-                                <select class="form-select form-control @error('teacher_name') is-invalid @enderror" aria-label="Default select example" name="teacher_name" id="teacher">
+                                <label for="kelas" class="form-label font-weight-bold">Choose Student</label>
+                                <select class="form-select form-control @error('student_name') is-invalid @enderror" aria-label="Default select example" name="student_name" id="student">
 
-                                @forelse ($users as $user)
-                                    <option value="{{ $user->id}}">
-                                    {{ $user->name}}
+                                @forelse ($student_as as $student_a)
+                                    <option value="{{ $student_a->id}}">
+                                    {{ $student_a->name}}
                                      </option>
                                      @empty
                                   <div class="alert alert-danger">
@@ -36,7 +36,7 @@
                                  </select>
 
                                         <!-- error message untuk title -->
-                                @error('teacher_name')
+                                @error('student_name')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
