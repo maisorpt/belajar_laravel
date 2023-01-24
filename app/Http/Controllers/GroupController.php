@@ -82,9 +82,7 @@ class GroupController extends Controller
 
     public function destroy(Group $group)
     {
-        //delete image
-
-        //delete post
+        
         $group->delete();
 
         //redirect to index

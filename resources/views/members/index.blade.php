@@ -29,8 +29,8 @@
                             <thead>
                               <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Class</th>
                                 <th scope="col">Student Name</th>
+                                <th scope="col">Class</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -40,11 +40,11 @@
                               @forelse ($members as $member)
                                 <tr>
                                     <td>{{ $member->id}}</td>
-                                    <td>{{ $member->class_name }}</td>
                                     <td>{{ $member->student_name}}</td>
+                                    <td>{{ $member->class_name }}</td>
                                     <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('student_as.destroy', $member->id) }}" method="POST">
-                                            <a href="{{ route('student_as.edit', $member->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('members.destroy', $member->id) }}" method="POST">
+                                            <a href="{{ route('members.edit', $member->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>

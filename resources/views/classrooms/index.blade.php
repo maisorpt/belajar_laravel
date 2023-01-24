@@ -42,8 +42,8 @@
                                     <td>{{ $classroom->id}}</td>
                                     <td>{{ $classroom->name }}</td>
                                     <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('student_as.destroy', $classroom->id) }}" method="POST">
-                                            <a href="{{ route('student_as.edit', $classroom->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('classrooms.destroy', $classroom->id) }}" method="POST">
+                                            <a href="{{ route('classrooms.edit', $classroom->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
