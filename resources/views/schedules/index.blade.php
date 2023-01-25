@@ -29,8 +29,8 @@
                             <thead>
                               <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Class</th>
                                 <th scope="col">Teacher Name</th>
+                                <th scope="col">Class</th>
                                 <th scope="col">Course</th>
                                 <th scope="col">Time Start</th>
                                 <th scope="col">Time End</th>
@@ -43,8 +43,8 @@
                               @forelse ($schedules as $schedule)
                                 <tr>
                                     <td>{{ $schedule->id}}</td>
-                                    <td>{{ $schedule->classroom_name}}</td>
                                     <td>{{ $schedule->teacher}}</td>
+                                    <td>{{ $schedule->classroom_name}}</td>
                                     <td>{{ $schedule->note}}</td>
                                     <td>{{ $schedule->start}}</td>
                                     <td>{{ $schedule->end}}</td>
