@@ -50,6 +50,7 @@
                                     <td>{{ $schedule->end}}</td>
                                     <td class="text-center">
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('schedules.destroy', $schedule->id) }}" method="POST">
+                                            <a href="{{ route('presences.attendance', ['id' => $schedule->id]) }}" class="btn btn-sm btn-warning">ABSEN</a>
                                             <a href="{{ route('schedules.edit', $schedule->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                             @csrf
                                             @method('DELETE')

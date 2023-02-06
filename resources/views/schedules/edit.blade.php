@@ -26,7 +26,7 @@
 
                                 @forelse ($groups as $group)
                                 <option value="{{ $group->id}}" {{ $group->id == $schedule->user_id ? 'selected' : '' }}>
-                                 {{ $users->where('id', $group->user_id)->first()->name }} - {{ $classrooms->where('id', $group->classroom_id)->first()->name }}
+                                {{ $group->user_id ? $users->where('id', $group->user_id)->first()->name : '-' }} - {{ $group->classroom_id ? $classrooms->where('id', $group->classroom_id)->first()->name : '-' }}
                                 </option>
                                  @empty
                                 <div class="alert alert-danger">

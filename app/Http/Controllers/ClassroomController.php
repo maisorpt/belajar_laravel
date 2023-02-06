@@ -34,7 +34,7 @@ class ClassroomController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('classrooms.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('classrooms')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function edit(Classroom $classroom)
@@ -57,7 +57,7 @@ class ClassroomController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('classrooms.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('classrooms')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
     public function destroy(Classroom $classroom)
@@ -66,7 +66,7 @@ class ClassroomController extends Controller
         $classroom->delete();
 
         //redirect to index
-        return redirect()->route('classrooms.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('classrooms')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 
 

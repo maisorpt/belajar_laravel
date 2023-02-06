@@ -14,10 +14,10 @@ class PresenceController extends Controller
     {
         //get posts
         $presences = DB::table('presences')
-                ->join('schedules', 'schedules.id', '=', 'presences.schedule_id')
-                ->join('student_as', 'student_as.id', '=', 'presences.student_id')
-                ->select('presences.id','schedules.note as schedule', 'student_as.name', 'presences.presence', 'presences.note')
-                ->paginate(10);
+            ->join('schedules', 'schedules.id', '=', 'presences.schedule_id')
+            ->join('student_as', 'student_as.id', '=', 'presences.student_id')
+            ->select('presences.id', 'schedules.note as schedule', 'student_as.name', 'presences.presence', 'presences.note')
+            ->paginate(10);
 
         //render view with posts
         return view('presences.index', compact('presences'));
@@ -28,7 +28,50 @@ class PresenceController extends Controller
         $schedules = Schedule::all();
         $student_as = Student_a::all();
 
-        return view('presences.create', compact('schedules','student_as'));
+        return view('presences.create', compact('schedules', 'student_as'));
+    }
+
+    public function attendance(Request $request)
+    {
+        $schedule_id = $request->input('id');
+        $student_as = Student_a::all();
+
+        return view('presences.attendance', compact('schedule_id', 'student_as'));
+    }
+    public function attendance_store(Request $request)
+    {
+        $counter = $request->input('counter');
+
+        //create post
+        $rules = [];
+        for ($i = 1; $i <= $counter; $i++) {
+            $rules['course' . $i] = 'required';
+            $rules['student' . $i] = 'required';
+            $rules['presence' . $i] = 'required';
+            $rules['note' . $i] = 'required';
+        }
+        $this->validate($request, $rules);
+
+        for ($i = 1; $i <= $counter; $i++) {
+            $course[$i] = $request->input('course' . $i);
+            $student[$i] = $request->input('student' . $i);
+            $presence[$i] = $request->input('presence' . $i);
+            $note[$i] = $request->input('note' . $i);
+
+            try {
+                Presence::create([
+                    'schedule_id' => $course[$i],
+                    'student_id' => $student[$i],
+                    'presence' => $presence[$i],
+                    'note' => $note[$i]
+                ]);
+            } catch (\Exception $e) {
+                // Handle the exception here
+            }
+        }
+
+        //redirect to index
+        return redirect()->route('presences')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function store(Request $request)
@@ -52,14 +95,14 @@ class PresenceController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('presences.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('presences')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function edit(Presence $presence)
     {
         $schedules = Schedule::all();
         $student_as = Student_a::all();
-        
+
 
         return view('presences.edit', compact('presence', 'schedules', 'student_as'));
     }
@@ -85,15 +128,15 @@ class PresenceController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('presences.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('presences')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
     public function destroy(Presence $presence)
     {
-        
+
         $presence->delete();
 
         //redirect to index
-        return redirect()->route('$presences.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('presences')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

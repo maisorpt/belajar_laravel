@@ -41,9 +41,17 @@ Route::resource('/groups', \App\Http\Controllers\GroupController::class);
 Route::resource('/members', \App\Http\Controllers\MemberController::class);
 Route::resource('/presences', \App\Http\Controllers\PresenceController::class);
 Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
-
+Route::get('/attendance', [\App\Http\Controllers\PresenceController::class, 'attendance'])->name('presences.attendance');
+Route::post('/attendance/proses', [\App\Http\Controllers\PresenceController::class, 'attendance_store'])->name('presences.attendances');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/student_as', [App\Http\Controllers\Student_aController::class, 'index'])->name('student_as');
+    Route::get('/classrooms', [App\Http\Controllers\ClassroomController::class, 'index'])->name('classrooms');
+    Route::get('/groups', [App\Http\Controllers\GroupController::class, 'index'])->name('groups');
+    Route::get('/members', [App\Http\Controllers\MemberController::class, 'index'])->name('members');
+    Route::get('/presences', [App\Http\Controllers\PresenceController::class, 'index'])->name('presences');
+    Route::get('/schedules', [App\Http\Controllers\ScheduleController::class, 'index'])->name('schedules');
+});
 

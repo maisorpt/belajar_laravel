@@ -49,7 +49,7 @@ class Student_aController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('student_as.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('student_as')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function edit(Student_a $student_a)
@@ -97,7 +97,7 @@ class Student_aController extends Controller
         }
 
         //redirect to index
-        return redirect()->route('student_as.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('student_as')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
         public function destroy(Student_a $student_a)
@@ -109,6 +109,6 @@ class Student_aController extends Controller
         $student_a->delete();
 
         //redirect to index
-        return redirect()->route('student_as.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('student_as')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

@@ -16,8 +16,8 @@ class GroupController extends Controller
 
 
         $groups = DB::table('groups')
-            ->join('users', 'users.id', '=', 'groups.user_id')
-            ->join('classrooms', 'classrooms.id', '=', 'groups.classroom_id')
+            ->leftjoin('users', 'users.id', '=', 'groups.user_id')
+            ->leftjoin('classrooms', 'classrooms.id', '=', 'groups.classroom_id')
             ->select('groups.id', 'users.name as user_name', 'classrooms.name as class_name')
             ->paginate(10);
 
@@ -49,7 +49,7 @@ class GroupController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('groups.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('groups')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     public function edit(Group $group)
@@ -77,7 +77,7 @@ class GroupController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('groups.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('groups')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
     public function destroy(Group $group)
@@ -86,7 +86,7 @@ class GroupController extends Controller
         $group->delete();
 
         //redirect to index
-        return redirect()->route('groups.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('groups')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 
 }
