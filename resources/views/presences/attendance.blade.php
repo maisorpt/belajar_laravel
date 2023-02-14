@@ -34,29 +34,28 @@
                             @forelse ($student_as as $student_a)
                                 <tr>
                                 <td>
-                                <input type="hidden" name="student{{$x}}" value="{{ $student_a->id}}">
-                                <input type="hidden" name="course{{$x}}" value="{{request()->input('id')}}">
-                                <input type="hidden" name="counter" value="{{ $x}}">
+                                <input type="hidden" name="presence[{{$x}}][student]" value="{{ $student_a->id}}">
+                                <input type="hidden" name="presence[{{$x}}][course]" value="{{request()->input('id')}}">
                                 {{ $student_a->name}}</td>
                                 <td>
                                     <div> 
                    
-                            <input class="form-check-input mx-0" type="radio" style="width : 15px; height : 15px" name="presence{{$x}}" id="hadir{{$x}}" value="hadir">
+                            <input class="form-check-input mx-0" type="radio" style="width : 15px; height : 15px" name="presence[{{$x}}][status]" id="hadir{{$x}}" value="hadir">
                             <label class="form-check-label mx-4" style="font-size: 15px" for="hadir">Hadir</label>
 
-                            <input class="form-check-input mx-0" type="radio" style="width : 15px; height : 15px" name="presence{{$x}}" id="sakit{{$x}}" value="sakit">
+                            <input class="form-check-input mx-0" type="radio" style="width : 15px; height : 15px" name="presence[{{$x}}][status]" id="sakit{{$x}}" value="sakit">
                             <label class="form-check-label mx-4" style="font-size: 15px" for="sakit">Sakit</label>
 
-                            <input class="form-check-input mx-0" type="radio" style="width : 15px; height : 15px" name="presence{{$x}}" id="izin{{$x}}" value="izin">
+                            <input class="form-check-input mx-0" type="radio" style="width : 15px; height : 15px" name="presence[{{$x}}][status]" id="izin{{$x}}" value="izin">
                             <label class="form-check-label mx-4" style="font-size: 15px" for="izin">Izin</label>
 
-                            <input class="form-check-input mx-0" type="radio" style="width : 15px; height : 15px" name="presence{{$x}}" id="alpha{{$x}}" value="alpha">
+                            <input class="form-check-input mx-0" type="radio" style="width : 15px; height : 15px" name="presence[{{$x}}][status]" id="alpha{{$x}}" value="alpha">
                             <label class="form-check-label mx-4" style="font-size: 15px" for="alpha">Alpha</label>
                           
                         </div>
                             </td>
                                 <td>                               
-                            <textarea class="form-control @error('note') is-invalid @enderror" name="note{{$x}}" rows="2" placeholder="Masukkan Note"></textarea>
+                            <textarea class="form-control @error('note') is-invalid @enderror" name="presence[{{$x}}][note]" rows="2" placeholder="Masukkan Note"></textarea>
                             @php
                             $x++;
                             @endphp

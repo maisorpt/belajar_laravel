@@ -38,42 +38,67 @@ class PresenceController extends Controller
 
         return view('presences.attendance', compact('schedule_id', 'student_as'));
     }
+    // public function attendance_store(Request $request)
+    // {
+    //     $counter = $request->input('counter');
+
+    //     //create post
+    //     $rules = [];
+    //     for ($i = 1; $i <= $counter; $i++) {
+    //         $rules['course' . $i] = 'required';
+    //         $rules['student' . $i] = 'required';
+    //         $rules['presence' . $i] = 'required';
+    //         $rules['note' . $i] = 'required';
+    //     }
+    //     $this->validate($request, $rules);
+
+    //     for ($i = 1; $i <= $counter; $i++) {
+    //         $course[$i] = $request->input('course' . $i);
+    //         $student[$i] = $request->input('student' . $i);
+    //         $presence[$i] = $request->input('presence' . $i);
+    //         $note[$i] = $request->input('note' . $i);
+
+    //         try {
+    //             Presence::create([
+    //                 'schedule_id' => $course[$i],
+    //                 'student_id' => $student[$i],
+    //                 'presence' => $presence[$i],
+    //                 'note' => $note[$i]
+    //             ]);
+    //         } catch (\Exception $e) {
+    //             // Handle the exception here
+    //         }
+    //     }
+
+    //     //redirect to index
+    //     return redirect()->route('presences')->with(['success' => 'Data Berhasil Disimpan!']);
+    // }
     public function attendance_store(Request $request)
     {
-        $counter = $request->input('counter');
-
-        //create post
-        $rules = [];
-        for ($i = 1; $i <= $counter; $i++) {
-            $rules['course' . $i] = 'required';
-            $rules['student' . $i] = 'required';
-            $rules['presence' . $i] = 'required';
-            $rules['note' . $i] = 'required';
-        }
+        $inputs = $request->input('presence');
+        $rules = [
+            'presence.*.student' => 'required',
+            'presence.*.course' => 'required',
+            'presence.*.status' => 'required',
+            'presence.*.note' => 'required'
+        ];
         $this->validate($request, $rules);
-
-        for ($i = 1; $i <= $counter; $i++) {
-            $course[$i] = $request->input('course' . $i);
-            $student[$i] = $request->input('student' . $i);
-            $presence[$i] = $request->input('presence' . $i);
-            $note[$i] = $request->input('note' . $i);
-
+    
+        foreach ($inputs as $input) {
             try {
                 Presence::create([
-                    'schedule_id' => $course[$i],
-                    'student_id' => $student[$i],
-                    'presence' => $presence[$i],
-                    'note' => $note[$i]
+                    'student_id' => $input['student'],
+                    'schedule_id' => $input['course'],
+                    'presence' => $input['status'],
+                    'note' => $input['note']
                 ]);
             } catch (\Exception $e) {
                 // Handle the exception here
             }
         }
-
-        //redirect to index
+    
         return redirect()->route('presences')->with(['success' => 'Data Berhasil Disimpan!']);
     }
-
     public function store(Request $request)
     {
         //validate form
