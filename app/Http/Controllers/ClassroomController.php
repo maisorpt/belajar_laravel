@@ -9,7 +9,7 @@ class ClassroomController extends Controller
 {
 
         public function index(){
-            $classrooms = Classroom::latest()->paginate(5);
+            $classrooms = Classroom::all();
 
             //render view with posts
             return view('classrooms.index', compact('classrooms'));

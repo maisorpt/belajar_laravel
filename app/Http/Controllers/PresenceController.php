@@ -92,6 +92,7 @@ class PresenceController extends Controller
                     'presence' => $input['status'],
                     'note' => $input['note']
                 ]);
+                
             } catch (\Exception $e) {
                 // Handle the exception here
             }

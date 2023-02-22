@@ -24,7 +24,6 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <a href="{{ route('classrooms.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
                         <table class="table table-bordered">
                             <thead>
                               <tr>
@@ -42,12 +41,7 @@
                                     <td>{{ $classroom->id}}</td>
                                     <td>{{ $classroom->name }}</td>
                                     <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('classrooms.destroy', $classroom->id) }}" method="POST">
-                                            <a href="{{ route('classrooms.edit', $classroom->id) }}" class="btn btn-sm btn-primary">EDIT</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                                        </form>
+                                        <a href="{{ route('quizzes.quizzes', $classroom->id) }}" class="btn btn-sm btn-success">START QUIZZ</a>
                                     </td>
                                 </tr>
                               @empty
@@ -57,7 +51,6 @@
                               @endforelse
                             </tbody>
                           </table>  
-                         
                     </div>
                 </div>
             </div>

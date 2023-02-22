@@ -43,6 +43,11 @@ Route::resource('/presences', \App\Http\Controllers\PresenceController::class);
 Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
 Route::get('/attendance', [\App\Http\Controllers\PresenceController::class, 'attendance'])->name('presences.attendance');
 Route::post('/attendance/proses', [\App\Http\Controllers\PresenceController::class, 'attendance_store'])->name('presences.attendances');
+Route::get('/quizzes/{classroom}', [\App\Http\Controllers\QuizzController::class, 'quizzes'])->name('quizzes.quizzes');
+Route::get('/quizzes/{classroom}/{quizze}/{number}', [\App\Http\Controllers\QuizzController::class, 'quizze'])->name('quizzes.quizze');
+Route::post('/quizze/store/{classroom}/{quizze}/{number}', [\App\Http\Controllers\QuizzController::class, 'submit'])->name('quizzes.submit');
+Route::resource('/quizzes', \App\Http\Controllers\QuizzController::class);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
