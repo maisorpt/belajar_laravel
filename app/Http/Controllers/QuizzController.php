@@ -49,13 +49,13 @@ class QuizzController extends Controller
         $test_id = 1;
         $user = Auth::user()->id;
         $answers = Answer::where('question_id', $quizze_id)->where('test_id', $test_id)->where('user_id', $user);
-        $answer_list = $answers->select('answer')->get() ?? '';
+        $answer_list = $answers->pluck('answer', 'number')->toArray() ?? '';
         $answer = $answers->where('number', $number)->first()->answer ?? '';
     //    dd($answer_list);
         if($answer !== '' && $answer_list !== ''){
             return view('quizzes.quizze', compact('quizze', 'classroom', 'classroom_id', 'quizze_id', 'number', 'previous_question_id', 'next_question_id', 'answer','answer_list', 'limit'));
         }else{
-            return view('quizzes.quizze', compact('quizze', 'classroom', 'classroom_id', 'quizze_id', 'number', 'previous_question_id', 'next_question_id', 'limit'));
+            return view('quizzes.quizze', compact('quizze', 'classroom', 'classroom_id', 'quizze_id', 'number', 'previous_question_id', 'next_question_id','answer_list', 'limit'));
         }
        
     }
@@ -102,7 +102,7 @@ class QuizzController extends Controller
 
        }
 
-
+    //    dd($request->list_number);
         if ($request->has('previous')) {
             // Redirect to the previous question page
             $previous_number = $number - 1;
@@ -124,7 +124,7 @@ class QuizzController extends Controller
             return redirect()->route('quizzes.quizze', [
                 'classroom' => $classroom_id,
                 'quizze' => $quiz_id,
-                'number' => $number,
+                'number' => $request->list_number,
             ]);
         }
     }

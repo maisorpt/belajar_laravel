@@ -24,11 +24,8 @@
                              $x = 1 ;
                             @endphp
                             @while($x <= $limit)
-                            <a class="page-link {{ isset($answer_list) && $answer_list !== NULL ? 'active' : '' }}" href="{{route('quizzes.quizze', [
-                                'classroom' => $classroom_id,
-                                'quizze' => $quizze_id,
-                                'number' => $x,
-                            ])}}" >{{$x}}</a>
+                            <button class="page-link {{ isset($answer_list[$x]) && $answer_list[$x] !== NULL ? 'active' : '' }}
+                                "  onclick="submitFormWithListNumber({{ $x }})" >{{$x}}</button>
                             @php
                             $x++;
                             @endphp
@@ -36,22 +33,23 @@
                           </div>
                     </div>
                     <div class="col-5" style="height: 300px">
-                        <form action="{{ route('quizzes.submit', ['classroom' => $classroom_id, 'quizze' => $quizze_id, 'number' => $number]) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('quizzes.submit', ['classroom' => $classroom_id, 'quizze' => $quizze_id, 'number' => $number]) }}" method="POST" enctype="multipart/form-data" id="quiz-form">
                             @csrf
+                            <input type="hidden" name="list_number" id="list-number-input">
                             @forelse ($quizze as $quizz)
                                 {{ $quizz->number }}
                                 {{ $quizz->text }}
                                 <div>
-                                    <input class="form-check-input mx-0" type="radio" style="width:15px;height:15px" name="answer" id="hadir{{ $number }}" value="1" {{ isset($answer) && $answer == '1' ? 'checked' : '' }}>
+                                    <input class="form-check-input mx-0 quiz-radio" type="radio" style="width:15px;height:15px" name="answer" id="hadir{{ $number }}" value="1" {{ isset($answer) && $answer == '1' ? 'checked' : '' }}>
                                     <label class="form-check-label mx-4" style="font-size:15px" for="hadir">A.{{ $quizz->answer1 }}</label>
                                     <br>
-                                    <input class="form-check-input mx-0" type="radio" style="width:15px;height:15px" name="answer" id="sakit{{ $number }}" value="2" {{ isset($answer) && $answer == '2' ? 'checked' : '' }}>
+                                    <input class="form-check-input mx-0 quiz-radio" type="radio" style="width:15px;height:15px" name="answer" id="sakit{{ $number }}" value="2" {{ isset($answer) && $answer == '2' ? 'checked' : '' }}>
                                     <label class="form-check-label mx-4" style="font-size:15px" for="sakit">B.{{ $quizz->answer2 }}</label>
                                     <br>
-                                    <input class="form-check-input mx-0" type="radio" style="width:15px;height:15px" name="answer" id="izin{{ $number }}" value="3" {{ isset($answer) && $answer == '3' ? 'checked' : '' }}>
+                                    <input class="form-check-input mx-0 quiz-radio" type="radio" style="width:15px;height:15px" name="answer" id="izin{{ $number }}" value="3" {{ isset($answer) && $answer == '3' ? 'checked' : '' }}>
                                     <label class="form-check-label mx-4" style="font-size:15px" for="izin">C.{{ $quizz->answer3 }}</label>
                                     <br>
-                                    <input class="form-check-input mx-0" type="radio" style="width:15px;height:15px" name="answer" id="alpha{{ $number }}" value="4" {{ isset($answer) && $answer == '4' ? 'checked' : '' }}>
+                                    <input class="form-check-input mx-0 quiz-radio" type="radio" style="width:15px;height:15px" name="answer" id="alpha{{ $number }}" value="4" {{ isset($answer) && $answer == '4' ? 'checked' : '' }}>
                                     <label class="form-check-label mx-4" style="font-size:15px" for="alpha">D.{{ $quizz->answer4 }}</label>
                                 </div>
                             @empty
@@ -67,6 +65,7 @@
                                     <button type="submit" name="next" value="next" class="btn btn-md btn-primary">Next Question</button>
                                 @endif
                             </div>
+                            <button type="reset"  class="btn btn-md btn-primary" onclick="setTimeout(clearRadioButtons, 0)">Empty Question</button>
                         </form>
                     </div>
                 </div>
@@ -76,6 +75,23 @@
     
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        
+        function clearRadioButtons() {
+  var quizForm = document.getElementById("quiz-form");
+  var radioButtons = quizForm.querySelectorAll(".quiz-radio");
+  for (var i = 0; i < radioButtons.length; i++) {
+    radioButtons[i].checked = false;
+  }
+}
+function submitFormWithListNumber(number) {
+  // set the value of the hidden input field to the clicked question number
+  document.getElementById("list-number-input").value = number;
+  // submit the form
+  document.getElementById("quiz-form").submit();
+  
+}
+    </script>
 
 
 </body>
