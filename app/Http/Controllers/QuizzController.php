@@ -8,6 +8,7 @@ use App\Models\Quizze;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class QuizzController extends Controller
 {
@@ -18,14 +19,70 @@ class QuizzController extends Controller
         $classrooms = Classroom::all();
         //render view with posts
         return view('quizzes.index', compact('classrooms'));
+
+
     }
 
     public function quizzes(Classroom $classroom)
     {
+        
         $quizzes = Quizze::distinct('question_id')->pluck('question_id');
-
-        return view('quizzes.quizzes', compact('quizzes', 'classroom'));
+        $user_answers = Answer::where('user_id', Auth::user()->id)->distinct('question_id')->pluck('question_id');
+        if ($user_answers) {
+            return view('quizzes.quizzes', compact('quizzes', 'classroom', 'user_answers'));
+        }else{
+            return view('quizzes.quizzes', compact('quizzes', 'classroom'));
+        } 
     }
+
+    public function detail_answers($question_id){
+
+        $answers = Answer::select(DB::raw('MAX(test_id) as id'))->where('question_id', $question_id)->where('user_id', Auth::user()->id)->groupBy('test_id')->get();
+
+// dd($answers);
+        return view('quizzes.details', compact('answers','question_id'));
+    }
+
+    public function detail_answer($question_id, $test_id){
+
+        $correct_answer = 0;
+        $empty_answer = 0;
+        $answers = Answer::select('answer', 'number')->where('question_id', $question_id)->where('user_id', Auth::user()->id)->where('test_id', $test_id)->distinct()->get();
+        $questions = Quizze::where('question_id', $question_id)->get();
+        $limit = Quizze::where('question_id', $question_id)
+        ->count();
+        // dd($limit);
+        $x = 0;
+        $answer_list = [];
+
+        foreach ($questions as $question) {
+            $question_answer = $answers->firstWhere('number', $question->number);
+            if ($question_answer && $question_answer->answer == $question->correct_answer) {
+                $correct_answer++;
+                $answer_list[$x] = 1;
+            }  elseif($question_answer === NULL || $question_answer->answer == NULL){
+                $empty_answer++;
+                $answer_list[$x] = 0;
+            }else{
+                $answer_list[$x] = 0;
+            }
+            $x++;
+        }
+        $wrong_answer = $limit - $correct_answer;
+
+        $persen = round(($correct_answer / $limit )  * 100);
+
+        // dd($answer_list);
+        // dd($empty_answer, $correct_answer, $wrong_answer,$persen,$answers);
+        return view('quizzes.detail', compact('questions','test_id', 'limit', 'correct_answer', 'wrong_answer', 'persen', 'answer_list'));
+    }
+
+// public function answer_process(request $request){
+// //     $questions = Quizze::where('question_id', $question_id)->get();
+// //     $answer =$answers = Answer::select('id', 'test_id')->where('question_id', $question_id)->where('user_id', Auth::user()->id)->distinct()->get();
+// return redirect()->route('quizzes.detail', ['question_id' => $request->question_id, 'test_id' =>$request->test_id]);
+
+// }
 
     public function quizze($classroom_id, $quizze_id, $number)
     {
@@ -36,15 +93,15 @@ class QuizzController extends Controller
         $limit = Quizze::where('question_id', $quizze_id)
         ->count();
 
-        if($number == $limit - 1){
+        if($number <= $limit - 1 && $number > 1){
+            $previous_question_id = 1;
+            $next_question_id = 1;
+        }elseif($number == 1 ){
             $previous_question_id = 0;
             $next_question_id = 1;
-        }elseif(0 <= $number ){
-            $previous_question_id = 1;
-            $next_question_id = 0;
         }else{
             $previous_question_id = 1;
-            $next_question_id = 1;
+            $next_question_id = 0;
         }
         $test_id = 1;
         $user = Auth::user()->id;
@@ -60,24 +117,6 @@ class QuizzController extends Controller
        
     }
 
-    //     public function submit(Request $request, $classroom_id, $quizze_id, $number)
-// {
-//     // Process the form data here
-
-    //     // Answer::create([
-//     //     'user_id' => $request->user_id,
-//     //     'test_id' => $request->test_id,
-//     //     'question_id' => $request->question_id,
-//     //     'number' => $request->number,
-//     //     'answer' => $request->answer
-
-    //     // ]);
-
-    //     // Redirect the user to the next question
-//     $nextQuestion = $number + 1;
-//     return redirect()->route('quizzes.quizze', ['classroom' => $classroom_id, 'quizze' => $quizze_id, 'number' => $nextQuestion]);
-// }
-// }
     public function submit(Request $request, $classroom_id, $quiz_id, $number)
     {
         $test_id = 1;

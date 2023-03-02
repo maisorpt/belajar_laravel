@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card border-0 shadow rounded">
-                        <div class="card-body">
+                        <div class="card-body">         
                             <h1>Pilih Quiz</h1>
                             <div class="container">
                                 <div class="row">
@@ -36,6 +36,33 @@
                                                 <p class="card-text">Some quick example text to build on the card title and
                                                     make up the bulk of the card's content.</p>
                                                 <a href="{{ route('quizzes.quizze', ['classroom' => $classroom, 'quizze' => $quizz, 'number' => 1]) }}"
+                                                    class="btn btn-primary">Start Quizz</a>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div class="alert alert-danger">
+                                            Data Post belum Tersedia.
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow rounded mt-3 mb-3">
+                        <div class="card-body">         
+                            <h1>Quizz History</h1>
+                            <div class="container">
+                                <div class="row">
+                                    @forelse ($user_answers as $user_answer)
+                                        <div class="card col-6 mx-2" style="width: 18rem;">
+                                            <img src="..." class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Quizz {{ $user_answer }}</h5>
+                                                <p class="card-text">Some quick example text to build on the card title and
+                                                    make up the bulk of the card's content.</p>
+                                                <a href="{{ route('quizzes.details', ['question_id' => $user_answer]) }}"
                                                     class="btn btn-primary">Start Quizz</a>
                                             </div>
                                         </div>

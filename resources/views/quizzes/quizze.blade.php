@@ -58,10 +58,10 @@
                                 </div>
                             @endforelse
                             <div style="position:absolute;bottom:0;">
-                                @if ($previous_question_id !== 0)
+                                @if ($previous_question_id == 1)
                                     <button type="submit" name="previous" value="previous" class="btn btn-md btn-primary">Previous Question</button>
                                 @endif
-                                @if ($next_question_id !== 0)
+                                @if ($next_question_id == 1)
                                     <button type="submit" name="next" value="next" class="btn btn-md btn-primary">Next Question</button>
                                 @endif
                             </div>
