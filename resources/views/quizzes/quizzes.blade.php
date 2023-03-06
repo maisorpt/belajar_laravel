@@ -28,14 +28,14 @@
                             <h1>Pilih Quiz</h1>
                             <div class="container">
                                 <div class="row">
-                                    @forelse ($quizzes as $quizz)
+                                    @forelse ($quizzes as $index => $quizz)
                                         <div class="card col-6 mx-2" style="width: 18rem;">
                                             <img src="..." class="card-img-top" alt="...">
                                             <div class="card-body">
                                                 <h5 class="card-title">Quizz {{ $quizz }}</h5>
                                                 <p class="card-text">Some quick example text to build on the card title and
                                                     make up the bulk of the card's content.</p>
-                                                <a href="{{ route('quizzes.quizze', ['classroom' => $classroom, 'quizze' => $quizz, 'number' => 1]) }}"
+                                                <a href="{{ route('quizzes.quizze', ['classroom' => $classroom, 'quizze' => $quizz, 'test_id' => $test_id[$index],'number' => 1]) }}"
                                                     class="btn btn-primary">Start Quizz</a>
                                             </div>
                                         </div>

@@ -44,11 +44,10 @@ Route::resource('/schedules', \App\Http\Controllers\ScheduleController::class);
 Route::get('/attendance', [\App\Http\Controllers\PresenceController::class, 'attendance'])->name('presences.attendance');
 Route::post('/attendance/proses', [\App\Http\Controllers\PresenceController::class, 'attendance_store'])->name('presences.attendances');
 Route::get('/quizzes/{classroom}', [\App\Http\Controllers\QuizzController::class, 'quizzes'])->name('quizzes.quizzes');
-Route::get('/quizzes/{classroom}/{quizze}/{number}', [\App\Http\Controllers\QuizzController::class, 'quizze'])->name('quizzes.quizze');
-Route::post('/quizze/store/{classroom}/{quizze}/{number}', [\App\Http\Controllers\QuizzController::class, 'submit'])->name('quizzes.submit');
+Route::get('/quizzes/{classroom}/{quizze}/{test_id}/{number}', [\App\Http\Controllers\QuizzController::class, 'quizze'])->name('quizzes.quizze');
+Route::post('/quizze/store/{classroom}/{quizze}/{test_id}/{number}', [\App\Http\Controllers\QuizzController::class, 'submit'])->name('quizzes.submit');
 Route::get('/quizzes/details/{question_id}', [\App\Http\Controllers\QuizzController::class, 'detail_answers'])->name('quizzes.details');
 Route::get('/quizze/detail/{question_id}/{test_id}', [\App\Http\Controllers\QuizzController::class, 'detail_answer'])->name('quizzes.detail');
-Route::post('/quizzes/process', [\App\Http\Controllers\QuizzController::class, 'answer_process'])->name('quizzes.process');
 Route::resource('/quizzes', \App\Http\Controllers\QuizzController::class);
 
 Auth::routes();

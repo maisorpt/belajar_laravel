@@ -33,7 +33,7 @@
                           </div>
                     </div>
                     <div class="col-5" style="height: 300px">
-                        <form action="{{ route('quizzes.submit', ['classroom' => $classroom_id, 'quizze' => $quizze_id, 'number' => $number]) }}" method="POST" enctype="multipart/form-data" id="quiz-form">
+                        <form action="{{ route('quizzes.submit', ['classroom' => $classroom_id, 'quizze' => $quizze_id, 'test_id' => $test_id ,'number' => $number]) }}" method="POST" enctype="multipart/form-data" id="quiz-form">
                             @csrf
                             <input type="hidden" name="list_number" id="list-number-input">
                             @forelse ($quizze as $quizz)
@@ -64,6 +64,9 @@
                                 @if ($next_question_id == 1)
                                     <button type="submit" name="next" value="next" class="btn btn-md btn-primary">Next Question</button>
                                 @endif
+                                @if ($next_question_id == 0 && $previous_question_id == 1 )
+                                <button type="submit" name="next" value="next" class="btn btn-md btn-primary">SELESAI</button>
+                                 @endif
                             </div>
                             <button type="reset"  class="btn btn-md btn-primary" onclick="setTimeout(clearRadioButtons, 0)">Empty Question</button>
                         </form>
