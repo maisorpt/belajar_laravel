@@ -3,6 +3,7 @@
     <html>
 <head>
   <title>MITQ - Al Firdaus</title>
+  <script src="{{ mix('js/app.js') }}"></script>
   <link href="{{ asset('/css/style.css') }}" type="text/css" rel="stylesheet">
   <link href="/img/favicon.ico" rel="icon">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">

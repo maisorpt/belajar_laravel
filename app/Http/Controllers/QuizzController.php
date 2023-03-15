@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\Classroom;
 use App\Models\Quizze;
+use App\Models\User_Answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
@@ -177,5 +178,58 @@ class QuizzController extends Controller
                 'number' => $request->list_number,
             ]);
         }
+    }
+
+    public function complete( Request $request){
+
+        $user = Auth::user()->id;
+        $answer = Answer::where('question_id',  $request -> question_id)->where('test_id', $request -> test_id)->where('user_id', $user)->where('number', $request -> number)->first();
+
+        // dd($user, $request -> test_id,  $request -> question_id, $number, $request->answer);
+
+        if ($answer) {
+            // Update the answer if it already exists
+            $answer->update(['answer' => $request->answer]);
+        } else {
+            // Create a new answer if it doesn't exist
+            Answer::create([
+                'user_id' => $user,
+                'test_id' => $request -> test_id,
+                'question_id' =>  $request -> question_id,
+                'number' =>$request -> number,
+                'answer' => $request->answer
+
+            ]);
+
+        }
+
+        
+        $timeInMilliseconds = $request->remaining_time;
+        $remainingTime = gmdate("H:i:s", $timeInMilliseconds / 1000);
+        $isCompleted = $request->check == "true" ? 1 : 0;
+
+        $user_answer = User_Answer::where('user_id', $user)->where('question_id', $request->question_id)->where('test_id', $request->test_id)->first();
+
+        if ($user_answer) {
+
+            $user_answer->update([
+                'remaining_time' => $remainingTime,
+            ]);
+            
+        }else{
+            
+            User_Answer::create([
+                'user_id' => Auth::user()->id,
+                'test_id' => $request -> test_id,
+                'question_id' => $request -> question_id,
+                'remaining_time' => $remainingTime,
+                'isCompleted' => $isCompleted,
+            ]);
+    
+        }
+
+
+        
+
     }
 }
